@@ -1,6 +1,16 @@
 import React from "react";
 
 const PointsContainer = ({ title, points }) => {
+
+  const copyIt = (e) => {
+    const pointText = e.target.parentElement.querySelector("p").innerText;
+    navigator.clipboard.writeText(pointText).then(() => {
+      alert("Point copied to clipboard!");
+    }).catch(err => {
+      console.error("Failed to copy text: ", err);
+    });
+  }
+
   return (
     <div className="flex-1 flex flex-col gap-2 min-h-52">
       <h2 className="text-4xl font-bold text-gray-800 drop-shadow-md">
@@ -9,12 +19,12 @@ const PointsContainer = ({ title, points }) => {
       {points.map((point, index) => (
         <div
           key={index}
-          className="bg-white p-2 border border-gray-300 mt-1 rounded-lg shadow-md relative"
+          className="bg-white p-2 border border-gray-300 mt-1 rounded-lg shadow-md relative pb-15"
         >
-          <button className="bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 text-white py-2 px-4 rounded-lg hover:scale-105 transform transition-transform duration-100 shadow-md cursor-pointer absolute top-2 right-2">
+          <p>{point}</p>
+          <button onClick={copyIt} className="bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 text-white py-2 px-4 rounded-lg hover:scale-105 transform transition-transform duration-100 shadow-md cursor-pointer absolute bottom-2 right-1/2 translate-x-1/2">
             Copy
           </button>
-          <p>{point}</p>
         </div>
       ))}
     </div>

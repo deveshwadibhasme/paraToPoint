@@ -8,7 +8,6 @@ function App() {
   const [points, setPoints] = useState();
   const [loading, setLoading] = useState();
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -27,7 +26,6 @@ function App() {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data.replace('```json', '').replace('```', ''));
       const formattedData = data.replace('```json', '').replace('```', '');
       const parsedData = JSON.parse(formattedData);
       setLoading(false);

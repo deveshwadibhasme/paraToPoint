@@ -15,7 +15,7 @@ export default async function getSewaPoints(paragraph) {
     3. Then generate a shortened version of the same for Twitter (max 280 characters per point, including hashtags).
     4.Don't include any other text or explanation, just the formatted output without any other code block like "json".
     5.Output should be a JSON object with two keys: "instagram" and "twitter".
-    
+
     Output should be:
     {
       "instagram": [
