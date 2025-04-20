@@ -48,7 +48,7 @@ function App() {
         >
           <textarea
             className="max-w-5xl w-full bg-gray-50 text-gray-800 h-96 p-2 border border-gray-400 rounded-lg shadow-md outline-none resize-y hover:scale-101 transform transition-transform duration-300"
-            placeholder="Paste your paragraph here..."
+            placeholder="सत साहेब जी अपना पैराग्राफ यहां पेस्ट करें..."
           ></textarea>
           <button
             type="submit"
