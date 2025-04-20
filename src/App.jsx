@@ -1,35 +1,84 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import PointsContainer from "./components/PointsContainer";
+
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [points, setPoints] = useState();
+  const [loading, setLoading] = useState();
 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const form = e.target;
+    const textArea = form.querySelector("textarea");
+    const paragraph = textArea.value || "";
+
+    // Call the backend API to get formatted points
+    const response = await fetch("http://localhost:4000/api/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({paragraph:paragraph}),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data.replace('```json', '').replace('```', ''));
+      const formattedData = data.replace('```json', '').replace('```', '');
+      const parsedData = JSON.parse(formattedData);
+      setLoading(false);
+      setPoints(parsedData);
+    } else {
+      console.error("Error formatting points");
+      setLoading(false);
+    }
+  };
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="max-w-screen-xl w-full min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 mx-auto flex flex-col items-center justify-start p-6">
+        <h1 className="text-6xl font-extrabold text-center text-gray-800 drop-shadow-md">
+          Sewa Points Formatter
+        </h1>
+        <form
+          action=""
+          onSubmit={handleSubmit}
+          className="w-full max-w-5xl mt-8 flex flex-col items-center"
+        >
+          <textarea
+            className="max-w-5xl w-full bg-gray-50 text-gray-800 h-96 p-2 border border-gray-400 rounded-lg shadow-md outline-none resize-y hover:scale-101 transform transition-transform duration-300"
+            placeholder="Paste your paragraph here..."
+          ></textarea>
+          <button
+            type="submit"
+            className="mt-8 bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 text-white py-2 px-2 rounded-lg w-35 text-xl font-bold shadow-md hover:scale-101 transform transition-transform duration-300"
+          >
+            Format
+          </button>
+        </form>
+        <div className="mt-8 flex flex-col md:flex-row justify-between w-full max-w-5xl text-center gap-8">
+          {loading ? <div className="bg-white p-4 border border-gray-300 rounded-lg shadow-md mx-auto">
+              Loading...
+            </div> : (
+              <>     
+              <PointsContainer
+                title={"Instagram"}
+                points={points?.instagram || []}
+              />
+              <PointsContainer
+                title={"Twitter"}
+                points={points?.twitter || []}
+              />
+            </>
+          )
+          }
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
