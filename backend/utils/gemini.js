@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-const API_KEY = process.env.GEMINI_API_KEY; // store in .env file
+const API_KEY = AIzaSyAY8GUgZqoxabTy5jfQi8qcGtZbFotfYaI  || process.env.GEMINI_API_KEY; // store in .env file
 
 import { GoogleGenAI } from "@google/genai";
 
