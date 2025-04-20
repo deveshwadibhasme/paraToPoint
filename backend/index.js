@@ -8,13 +8,13 @@ const app = express();
 app.use(express.json());
 
 // Use CORS middleware
-app.use(
-  origin: 'https://paratopoint.vercel.app', // 
+app.use({
+  origin: 'https://paratopoint.vercel.app', 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
   allowedHeaders: ['Content-Type', 'Authorization'], 
   credentials: true, 
   optionsSuccessStatus: 204
-));
+});
 
 
 app.post('/api/gemini', async (req, res) => {
