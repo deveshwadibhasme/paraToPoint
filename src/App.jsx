@@ -15,8 +15,11 @@ function App() {
     const textArea = form.querySelector("textarea");
     const paragraph = textArea.value || "";
 
+    const LOCAL_URL = "http://localhost:4000/api/gemini";
+    const PUBLIC_URL = "https://paratopoint-production.up.railway.app/api/gemini";
+
     // Call the backend API to get formatted points
-    const response = await fetch("http://localhost:4000/api/gemini", {
+    const response = await fetch(PUBLIC_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
