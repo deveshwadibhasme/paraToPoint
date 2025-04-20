@@ -16,6 +16,7 @@ export default async function getSewaPoints(paragraph) {
     4.Don't include any other text or explanation, just the formatted output without any other code block like "json".
     5.Output should be a JSON object with two keys: "instagram" and "twitter".
 
+
     Output should be:
     {
       "instagram": [
@@ -39,7 +40,7 @@ export default async function getSewaPoints(paragraph) {
       contents: prompt,
     });
     if (response &&  response.text) {
-      return JSON.stringify(response.text); // Adjusted to access the correct property
+      return response.text; // Adjusted to access the correct property
     } else {
       console.warn("No data or output returned from AI model.");
       return null;

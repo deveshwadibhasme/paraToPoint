@@ -1,35 +1,36 @@
 import { useState } from "react";
 import PointsContainer from "./components/PointsContainer";
 
-
-
-
 function App() {
   const [points, setPoints] = useState();
   const [loading, setLoading] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    window.scrollTo({ top: e.target.getBoundingClientRect().height, behavior: "smooth" });
+
     setLoading(true);
     const form = e.target;
     const textArea = form.querySelector("textarea");
     const paragraph = textArea.value || "";
 
     const LOCAL_URL = "http://localhost:4000/api/gemini";
-    const PUBLIC_URL = "https://paratopoint-production.up.railway.app/api/gemini";
+    const PUBLIC_URL =
+      "https://paratopoint-production.up.railway.app/api/gemini";
 
-    // Call the backend API to get formatted points
+  
     const response = await fetch(PUBLIC_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({paragraph:paragraph}),
+      body: JSON.stringify({ paragraph: paragraph }),
     });
 
     if (response.ok) {
-      const data = await response.json();
-      const formattedData = data.replace('```json', '').replace('```', '');
+      const data = await response.text();
+      const formattedData = data.replace("```json", "").replace("```", "");
       const parsedData = JSON.parse(formattedData);
       setLoading(false);
       setPoints(parsedData);
@@ -59,23 +60,25 @@ function App() {
           >
             Format
           </button>
+          <p className="text-red-700 mt-2">यह टूल गलती कर सकता है, पहले पढ़ें फिर कॉपी करें</p>
         </form>
         <div className="mt-8 flex flex-col md:flex-row justify-between w-full max-w-5xl text-center gap-8">
-          {loading ? <div className="bg-white p-4 border border-gray-300 rounded-lg shadow-md mx-auto">
-              Loading...
-            </div> : (
-              <>     
-              <PointsContainer
-                title={"Instagram"}
-                points={points?.instagram || []}
-              />
+          {loading ? (
+            <div className="bg-white p-4 border border-gray-300 rounded-lg shadow-md mx-auto">
+              थोड़ा टाइम लगेगा तब तक जाप कर लिजिये....
+            </div>
+          ) : (
+            <>
               <PointsContainer
                 title={"Twitter"}
                 points={points?.twitter || []}
               />
+              <PointsContainer
+                title={"Instagram"}
+                points={points?.instagram || []}
+              />
             </>
-          )
-          }
+          )}
         </div>
       </div>
     </>
