@@ -12,7 +12,7 @@ const PointsContainer = ({ title, points }) => {
   }
 
   return (
-    <div className="flex-1 flex flex-col gap-2 min-h-52">
+    <div className="flex-1 flex flex-col gap-2 min-h-10">
       <h2 className="text-4xl font-bold text-gray-800 drop-shadow-md">
         {title} Points
       </h2>
