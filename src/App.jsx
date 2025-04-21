@@ -2,7 +2,7 @@ import { useState } from "react";
 import PointsContainer from "./components/PointsContainer";
 
 function App() {
-  const [points, setPoints] = useState();
+  const [points, setPoints] = useState(JSON.parse(localStorage.getItem("points")));
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState();
 
@@ -16,7 +16,7 @@ function App() {
     e.preventDefault();
     
     window.scrollTo({ top: e.target.getBoundingClientRect().height, behavior: "smooth" });
-
+    localStorage.removeItem("points");
     setLoading(true);
     const form = e.target;
     const textArea = form.querySelector("textarea");
@@ -40,6 +40,7 @@ function App() {
       const parsedData = JSON.parse(formattedData);
       setLoading(false);
       setPoints(parsedData);
+      localStorage.setItem("points", JSON.stringify(parsedData));
     } else {
       console.error("Error formatting points");
       setLoading(false);
@@ -73,12 +74,12 @@ function App() {
         <div className="mt-8 flex flex-col md:flex-row justify-between w-full max-w-5xl text-center gap-8">
           {loading ? (
             <div className="bg-white p-4 border border-gray-300 rounded-lg shadow-md mx-auto">
-              थोड़ा टाइम लगेगा तब तक जाप कर लिजिये....
+              थोड़ा टाइम लगेगा तब तक जाप कर लिजिये.... (इंस्टाग्राम के पॉइंट्स ट्विटर के निचे आयेंगे !!)
               <div className="flex items-center justify-center mt-4">
                 <button
                   onClick={handleCount}
                   className="bg-green-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-600 transform transition-transform duration-300 hover:scale-105"
-                >
+                >   
                   👆🏻
                 </button>
                 <span
@@ -94,10 +95,12 @@ function App() {
               <PointsContainer
                 title={"Twitter"}
                 points={points?.twitter || []}
+                colour={"text-black bg-white bg-gradient-to-r from-gray-200 to-gray-300"}
               />
               <PointsContainer
                 title={"Instagram"}
                 points={points?.instagram || []}
+                colour={"text-white bg-slate-400 bg-gradient-to-r from-slate-400 to-slate-500"}
               />
             </>
           )}
