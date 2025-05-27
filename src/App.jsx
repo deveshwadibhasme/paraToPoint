@@ -22,9 +22,9 @@ function App() {
     const textArea = form.querySelector("textarea");
     const paragraph = textArea.value || "";
 
-    const LOCAL_URL = "http://localhost:4000/api/gemini";
+    const LOCAL_URL = " http://localhost:4000/api/gemini";
     const PUBLIC_URL =
-      "https://paratopoint-production.up.railway.app/api/gemini";
+      "https://paratopoint.onrender.com/api/gemini";
 
   
     const response = await fetch(PUBLIC_URL, {
